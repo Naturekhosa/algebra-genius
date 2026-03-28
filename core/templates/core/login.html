@@ -1,18 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Algebra Genius</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --bg-light: #f8fafc;
+            --glass-white: rgba(255, 255, 255, 0.95);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: var(--bg-light);
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: #1e293b;
+        }
+
+        .login-card {
+            background: var(--glass-white);
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            position: relative; /* Needed for the absolute positioning of the back link */
+        }
+
+        /* --- New Back Link Style --- */
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 0.85rem;
+            color: #64748b;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        h1 { font-size: 1.8rem; margin-bottom: 8px; color: #0f172a; }
+        .subtitle { color: #64748b; margin-bottom: 30px; font-size: 0.95rem; }
+
+        /* --- Form Styling --- */
+        form p { text-align: left; margin-bottom: 20px; }
+        form label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 6px; color: #475569; }
+        form input { width: 100%; padding: 12px 16px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 1rem; box-sizing: border-box; transition: all 0.2s; }
+        form input:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); }
+
+        button[type="submit"] {
+            width: 100%;
+            background: var(--primary-blue);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover { background: #1d4ed8; }
+        button[type="submit"]:active { transform: scale(0.98); }
+
+        .math-tip { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-top: 30px; font-size: 0.85rem; color: #475569; border-left: 4px solid var(--primary-blue); text-align: left; }
+        .footer-links { margin-top: 25px; font-size: 0.9rem; color: #64748b; }
+        .footer-links a { color: var(--primary-blue); text-decoration: none; font-weight: 600; }
+    </style>
 </head>
 <body>
-    <h1>Login</h1>
-    <p>Please log in to access the learning platform.</p>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
+    <div class="login-card">
+        <a href="{% url 'home' %}" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Back to Home
+        </a>
 
-    <p>Students without an account can <a href="{% url 'register' %}">register here</a>.</p>
+        <a href="{% url 'home' %}" class="logo-text">Algebra Genius</a>
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Log in to continue your math journey.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Login to Dashboard</button>
+        </form>
+
+        <div class="math-tip">
+            <strong>💡 Math Tip:</strong> Remember, whatever you do to one side of the equation, you must do to the other!
+        </div>
+
+        <div class="footer-links">
+            Don't have an account? <a href="{% url 'register' %}">Sign up</a>
+        </div>
+    </div>
+
 </body>
 </html>

@@ -1,11 +1,235 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Math Learning Platform</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algebra Genius | Learn Math Step-by-Step</title>
+    <style>
+        /* --- General Styles --- */
+        :root {
+            --primary-blue: #2563eb;
+            --secondary-blue: #eff6ff;
+            --dark-text: #1e293b;
+            --light-text: #64748b;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-text);
+            line-height: 1.6;
+            background-color: #f8fafc;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a { text-decoration: none; transition: 0.3s; }
+
+        /* --- Navigation --- */
+        nav {
+            background: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+
+        nav .nav-links a {
+            margin-left: 20px;
+            color: var(--dark-text);
+            font-weight: 500;
+        }
+
+        nav .nav-links a:hover { color: var(--primary-blue); }
+
+        /* --- Hero Section --- */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        }
+
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; color: var(--light-text); margin-bottom: 30px; }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .btn-primary { background: var(--primary-blue); color: var(--white); }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-secondary { background: var(--white); color: var(--primary-blue); border: 1px solid var(--primary-blue); }
+
+        /* --- Today's Focus Card --- */
+        .focus-section {
+            margin-top: -50px;
+            padding-bottom: 50px;
+        }
+
+        .card-focus {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .math-problem {
+            font-size: 1.5rem;
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* --- Features & How it Works --- */
+        .section-title { text-align: center; margin: 60px 0 40px; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card, .step-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .step-number {
+            background: var(--primary-blue);
+            color: white;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #1e293b;
+            color: #94a3b8;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        footer h2 { color: white; }
+        footer .copyright { margin-top: 40px; font-size: 0.9rem; }
+
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Math Learning Platform</h1>
-    <p><a href="{% url 'register' %}">Student Registration</a></p>
-    <p><a href="{% url 'login' %}">Login</a></p>
+
+    <div class="container">
+        <nav>
+            <div class="logo">Algebra Genius</div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            </div>
+        </nav>
+    </div>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Algebra Genius</h1>
+            <p>Unlock Your Math Potential</p>
+            <p style="max-width: 600px; margin-left: auto; margin-right: auto;">
+                Learn algebra step by step, practise with confidence, and grow your problem-solving skills.
+            </p>
+            <a href="{% url 'register' %}" class="btn btn-primary">Get Started</a>
+            <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+        </div>
+    </header>
+
+    <section class="focus-section container">
+        <div class="card-focus">
+            <h3>Today's Focus</h3>
+            <p>Solve for x:</p>
+            <div class="math-problem">2x + 5 = 15</div>
+            <p><small>Step-by-step learning</small></p>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title">Why Choose Algebra Genius?</h2>
+        <p style="text-align: center; color: var(--light-text); margin-top: -30px; margin-bottom: 40px;">
+            A simple platform designed to make learning algebra easier and more enjoyable.
+        </p>
+        
+        <div class="grid">
+            <div class="feature-card">
+                <h3>Simple Lessons</h3>
+                <p>Learn algebra concepts in a clear and easy-to-understand way.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Practice Questions</h3>
+                <p>Test your understanding with exercises and build confidence.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Track Progress</h3>
+                <p>Follow your learning journey and see how much you improve.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" style="background: #f1f5f9; padding: 60px 20px; border-radius: 20px;">
+        <h2 class="section-title">How It Works</h2>
+        <div class="grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Register</h3>
+                <p>Create your student account and join the platform.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Learn</h3>
+                <p>Choose algebra topics and study at your own pace.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Practice</h3>
+                <p>Answer questions and improve your problem-solving skills.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h2>Start Your Algebra Journey Today</h2>
+            <p>Join Algebra Genius and begin learning with confidence.</p>
+            <br>
+            <a href="{% url 'register' %}" class="btn btn-primary">Register Now</a>
+            <p class="copyright">© 2026 Algebra Genius. All rights reserved.</p>
+        </div>
+    </footer>
+
 </body>
 </html>

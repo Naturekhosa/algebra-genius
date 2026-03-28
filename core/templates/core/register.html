@@ -1,18 +1,197 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Student Registration</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Algebra Genius | Student Registration</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --secondary-blue: #3b82f6;
+            --bg-light: #f8fafc;
+            --glass-white: rgba(255, 255, 255, 0.95);
+            --success-green: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: var(--bg-light);
+            /* Matching Math Grid Pattern */
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: #1e293b;
+            padding: 20px;
+        }
+
+        .register-card {
+            background: var(--glass-white);
+            width: 100%;
+            max-width: 480px; /* Slightly wider for registration forms */
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 0.85rem;
+            color: #64748b;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--primary-blue); }
+
+        .header-area { text-align: center; margin-top: 15px; }
+        
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        h1 { font-size: 1.8rem; margin: 15px 0 8px; color: #0f172a; }
+        .subtitle { color: #64748b; margin-bottom: 25px; font-size: 0.95rem; text-align: center; }
+
+        /* --- Django Form Styling --- */
+        form p {
+            margin-bottom: 18px;
+        }
+
+        form label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            color: #475569;
+        }
+
+        form input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.2s;
+        }
+
+        form input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Help text (Django often renders this for passwords) */
+        .helptext {
+            display: block;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            background: var(--primary-blue);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+            margin-top: 15px;
+        }
+
+        button[type="submit"]:hover { background: #1d4ed8; }
+        button[type="submit"]:active { transform: scale(0.98); }
+
+        /* --- Registration Perks --- */
+        .perks {
+            background: #eff6ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px dashed var(--primary-blue);
+        }
+
+        .perk-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #1e40af;
+            margin-bottom: 5px;
+        }
+
+        .perk-item svg { color: var(--success-green); }
+
+        .footer-links {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #64748b;
+            text-align: center;
+        }
+
+        .footer-links a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Student Registration</h1>
-    <p>Create your student account below.</p>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
+    <div class="register-card">
+        <a href="{% url 'home' %}" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Back to Home
+        </a>
 
-    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        <div class="header-area">
+            <a href="{% url 'home' %}" class="logo-text">Algebra Genius</a>
+            <h1>Create Account</h1>
+            <p class="subtitle">Join thousands of students mastering algebra today.</p>
+        </div>
+
+        <div class="perks">
+            <div class="perk-item">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Track your progress on every lesson
+            </div>
+            <div class="perk-item">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Unlock practice worksheets
+            </div>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            {{ form.as_p }}
+
+            <button type="submit">Start Learning Now</button>
+        </form>
+
+        <div class="footer-links">
+            Already have an account? <a href="{% url 'login' %}">Login here</a>
+        </div>
+    </div>
+
 </body>
 </html>
