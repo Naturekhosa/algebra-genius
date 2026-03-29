@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ quiz.title }} | Algebra Genius</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f1f5f9; padding: 40px; }
+        .quiz-container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .question-block { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0; }
+        .option { display: block; margin: 10px 0; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; cursor: pointer; }
+        .option:hover { background: #eff6ff; }
+        .btn-submit { background: #10b981; color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>{{ quiz.title }}</h1>
+        <p>Topic: {{ quiz.topic.name }}</p>
+        <hr>
+
+        <form method="POST">
+            {% csrf_token %}
+            {% for question in quiz.questions.all %}
+                <div class="question-block">
+                    <p><strong>Question {{ forloop.counter }}:</strong> {{ question.text }}</p>
+                    {% for option in question.options.all %}
+                        <label class="option">
+                            <input type="radio" name="question_{{ question.id }}" value="{{ option.id }}" required>
+                            {{ option.text }}
+                        </label>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn-submit">Submit Quiz</button>
+        </form>
+    </div>
+</body>
+</html>
