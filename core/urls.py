@@ -8,7 +8,11 @@ from .views import (
     teacher_dashboard,
     logout_view,
     lesson_detail,  # New: Logic to view a specific lesson
-    take_quiz       # New: Logic to take a specific quiz
+    take_quiz,       # New: Logic to take a specific quiz
+    manage_topics,
+    edit_topic,
+    delete_topic,
+    
 )
 
 urlpatterns = [
@@ -26,5 +30,11 @@ urlpatterns = [
     path('lesson/<int:pk>/', lesson_detail, name='lesson_detail'), # [cite: 35]
     path('quiz/<int:pk>/', take_quiz, name='take_quiz'), 
               
-    path('quiz/<int:pk>/', take_quiz, name='take_quiz'),                    # 
+    path('quiz/<int:pk>/', take_quiz, name='take_quiz'), 
+
+    path('teacher/dashboard/', teacher_dashboard, name='teacher_dashboard'),
+    path('teacher/topics/', manage_topics, name='manage_topics'),
+    path('teacher/topics/<int:pk>/edit/', edit_topic, name='edit_topic'),
+    path('teacher/topics/<int:pk>/delete/', delete_topic, name='delete_topic'),
+                                  # 
 ]

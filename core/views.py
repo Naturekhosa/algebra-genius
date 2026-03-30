@@ -2,9 +2,9 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import StudentRegistrationForm, CustomLoginForm
+from .forms import StudentRegistrationForm, CustomLoginForm, TopicForm
 from .decorators import student_required, teacher_required
-from .models import Topic, Lesson, Quiz, Attempt, Option
+from .models import Topic, Lesson, Quiz, Attempt, Option, CustomUser
 
 # --- Public Views ---
 
@@ -54,8 +54,13 @@ def student_dashboard(request):
     """Displays topics and lessons available to the student[cite: 35, 77, 169]."""
     # Fetch all topics and their related lessons [cite: 104]
     topics = Topic.objects.all().prefetch_related('lessons')
+
+    # NEW: Fetch only THIS student's attempts, ordered by most recent
+    my_attempts = Attempt.objects.filter(student=request.user).order_by('-date_taken')[:5]
+    
     return render(request, 'core/student_dashboard.html', {
-        'topics': topics
+        'topics': topics,
+        'my_attempts': my_attempts  # Send attempts to the template
     })
 
 @login_required
@@ -151,6 +156,65 @@ def take_quiz(request, pk):
 def teacher_dashboard(request):
     """Renders the teacher interface for monitoring performance[cite: 26, 88, 129]."""
     return render(request, 'core/teacher_dashboard.html')
+
+@login_required
+@teacher_required
+def teacher_dashboard(request):
+    # Stats for the top boxes (matching your wireframe)
+    student_count = CustomUser.objects.filter(role='STUDENT').count()
+    quiz_count = Quiz.objects.count()
+    lesson_count = Lesson.objects.count()
+    
+    # Recent activity as requested
+    recent_attempts = Attempt.objects.select_related('student', 'quiz').order_by('-date_taken')[:5]
+    
+    return render(request, 'core/teacher_dashboard.html', {
+        'student_count': student_count,
+        'quiz_count': quiz_count,
+        'lesson_count': lesson_count,
+        'recent_attempts': recent_attempts,
+    })
+
+@login_required
+@teacher_required
+def manage_topics(request):
+    topics = Topic.objects.all()
+    
+    # Handle the "Add New Topic" form submission
+    if request.method == 'POST':
+        form = TopicForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('manage_topics')
+    else:
+        form = TopicForm()
+        
+    return render(request, 'core/manage_topics.html', {
+        'topics': topics,
+        'form': form
+    })
+
+@login_required
+@teacher_required
+def edit_topic(request, pk):
+    topic = get_object_or_404(Topic, pk=pk)
+    if request.method == 'POST':
+        form = TopicForm(request.POST, instance=topic)
+        if form.is_valid():
+            form.save()
+            return redirect('manage_topics')
+    else:
+        form = TopicForm(instance=topic)
+    return render(request, 'core/edit_topic.html', {'form': form, 'topic': topic})
+
+@login_required
+@teacher_required
+def delete_topic(request, pk):
+    topic = get_object_or_404(Topic, pk=pk)
+    if request.method == 'POST':
+        topic.delete()
+        return redirect('manage_topics')
+    return render(request, 'core/delete_topic.html', {'topic': topic})
 
 @login_required
 def logout_view(request):

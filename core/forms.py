@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import CustomUser
+from .models import CustomUser, Topic
 
 
 class StudentRegistrationForm(UserCreationForm):
@@ -22,3 +22,12 @@ class StudentRegistrationForm(UserCreationForm):
 
 class CustomLoginForm(AuthenticationForm):
     pass
+
+class TopicForm(forms.ModelForm):
+    class Meta:
+        model = Topic
+        fields = ['name', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g., Algebra'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Brief description...'}),
+        }

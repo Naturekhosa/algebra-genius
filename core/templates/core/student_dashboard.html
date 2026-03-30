@@ -10,6 +10,8 @@
             --sidebar-width: 260px;
             --primary-blue: #2563eb;
             --bg-light: #f1f5f9;
+            --success-green: #10b981;
+            --danger-red: #ef4444;
         }
 
         body {
@@ -100,9 +102,12 @@
             border-radius: 6px;
             text-decoration: none;
             font-size: 0.9rem;
+            transition: background 0.2s;
         }
 
-        /* Cool Feature: Simple Progress Bar */
+        .btn-start:hover { background: #1d4ed8; }
+
+        /* Progress Bar */
         .progress-container {
             width: 100%;
             background-color: rgba(255,255,255,0.3);
@@ -110,11 +115,29 @@
             margin-top: 15px;
         }
         .progress-bar {
-            width: 45%; /* This can be made dynamic later */
+            width: 45%; 
             height: 10px;
             background-color: white;
             border-radius: 10px;
         }
+
+        /* --- History Section --- */
+        .history-row {
+            display: flex; 
+            justify-content: space-between; 
+            border-bottom: 1px solid #f1f5f9; 
+            padding: 12px 0;
+            align-items: center;
+        }
+        .history-row:last-child { border-bottom: none; }
+        .score-pill {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        .pass { background: #dcfce7; color: var(--success-green); }
+        .fail { background: #fee2e2; color: var(--danger-red); }
 
     </style>
 </head>
@@ -161,8 +184,27 @@
             </div>
         </div>
 
+        <h3 style="margin-top: 40px;">My Recent Performance</h3>
+        <div class="stat-box" style="text-align: left; padding: 25px;">
+            {% for attempt in my_attempts %}
+                <div class="history-row">
+                    <div>
+                        <strong style="display: block;">{{ attempt.quiz.title }}</strong>
+                        <small style="color: #64748b;">{{ attempt.date_taken|date:"M d, Y" }}</small>
+                    </div>
+                    <span class="score-pill {% if attempt.score >= 70 %}pass{% else %}fail{% endif %}">
+                        {{ attempt.score }}%
+                    </span>
+                </div>
+            {% empty %}
+                <p style="color: #64748b; font-size: 0.9rem; text-align: center;">No quizzes attempted yet. Complete a lesson to unlock your first quiz!</p>
+            {% endfor %}
+        </div>
+
+        <h3 style="margin-top: 40px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Study Modules</h3>
+
         {% for topic in topics %}
-            <h3 style="margin-top: 40px;">{{ topic.name }}</h3>
+            <h3 style="margin-top: 30px; color: var(--primary-blue);">{{ topic.name }}</h3>
             <p style="color: #64748b; margin-top: -10px;">{{ topic.description }}</p>
             
             {% for lesson in topic.lessons.all %}
