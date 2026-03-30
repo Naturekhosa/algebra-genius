@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Results | Algebra Genius</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f1f5f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .result-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 100%; }
+        .score-circle { width: 120px; height: 120px; border-radius: 50%; border: 8px solid #2563eb; display: flex; align-items: center; justify-content: center; margin: 20px auto; font-size: 2rem; font-weight: bold; color: #2563eb; }
+        .btn-home { display: inline-block; background: #2563eb; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; margin-top: 20px; font-weight: 600; }
+        .passing { color: #10b981; }
+        .failing { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="result-card">
+        <h1>Quiz Complete!</h1>
+        <p>{{ quiz.title }}</p>
+        
+        <div class="score-circle {% if score >= 70 %}passing{% else %}failing{% endif %}">
+            {{ score }}%
+        </div>
+        
+        <p>You got <strong>{{ correct_count }}</strong> out of <strong>{{ total_questions }}</strong> questions correct.</p>
+        
+        {% if score >= 70 %}
+            <p style="color: #10b981;">Great job! You've mastered this topic.</p>
+        {% else %}
+            <p style="color: #64748b;">Keep practicing! Review the lesson and try again.</p>
+        {% endif %}
+
+        <a href="{% url 'student_dashboard' %}" class="btn-home">Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -108,6 +108,42 @@ def take_quiz(request, pk):
 
     return render(request, 'core/take_quiz.html', {'quiz': quiz})
 
+@login_required
+@student_required
+def take_quiz(request, pk):
+    quiz = get_object_or_404(Quiz, pk=pk)
+    
+    if request.method == 'POST':
+        score = 0
+        questions = quiz.questions.all()
+        total_questions = questions.count()
+        
+        for question in questions:
+            selected_option_id = request.POST.get(f'question_{question.id}')
+            if selected_option_id:
+                selected_option = get_object_or_404(Option, id=selected_option_id)
+                if selected_option.is_correct:
+                    score += 1
+        
+        final_score = int((score / total_questions) * 100) if total_questions > 0 else 0
+        
+        # Save the attempt
+        Attempt.objects.create(
+            student=request.user,
+            quiz=quiz,
+            score=final_score
+        )
+        
+        # NEW: Instead of redirecting, show the results page immediately
+        return render(request, 'core/quiz_results.html', {
+            'quiz': quiz,
+            'score': final_score,
+            'correct_count': score,
+            'total_questions': total_questions
+        })
+
+    return render(request, 'core/take_quiz.html', {'quiz': quiz})
+
 # --- Teacher & Management Views ---
 
 @login_required
@@ -121,3 +157,4 @@ def logout_view(request):
     """Logs the user out and returns to login page[cite: 30]."""
     logout(request)
     return redirect('login')
+
