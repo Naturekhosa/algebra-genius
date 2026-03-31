@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Lesson | Admin</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f9f9f9; display: flex; color: #333; }
+        .sidebar { width: 220px; background: #f1f1f1; height: 100vh; border-right: 1px solid #ccc; position: fixed; }
+        .sidebar-header { padding: 20px; text-align: center; font-weight: bold; border-bottom: 1px solid #ccc; background: #e8e8e8; }
+        .nav-link { display: block; padding: 15px 20px; color: #444; text-decoration: none; border-bottom: 1px solid #ddd; }
+        .main-content { margin-left: 220px; padding: 40px; flex-grow: 1; }
+        .form-card { background: white; padding: 30px; border-radius: 8px; border: 1px solid #ccc; max-width: 600px; margin: 0 auto; }
+        .form-group { margin-bottom: 15px; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit; }
+        .btn-save { background: #2563eb; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold; }
+        .btn-cancel { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">Admin Dashboard</div>
+        <a href="{% url 'manage_topics' %}" class="nav-link">Topics</a>
+        <a href="{% url 'manage_lessons' %}" class="nav-link">Lessons</a>
+        <a href="{% url 'teacher_dashboard' %}" class="nav-link" style="margin-top: 20px;">← Back</a>
+    </div>
+
+    <div class="main-content">
+        <div class="form-card">
+            <h2 style="margin-top: 0;">Edit Lesson: {{ lesson.title }}</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Topic</label>
+                    {{ form.topic }}
+                </div>
+                <div class="form-group">
+                    <label>Title</label>
+                    {{ form.title }}
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    {{ form.content }}
+                </div>
+                <button type="submit" class="btn-save">Update Lesson</button>
+                <a href="{% url 'manage_lessons' %}" class="btn-cancel">Cancel and Go Back</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -12,6 +12,11 @@ from .views import (
     manage_topics,
     edit_topic,
     delete_topic,
+    manage_lessons,
+    edit_lesson,
+    delete_lesson,
+    manage_quizzes,
+    manage_questions
     
 )
 
@@ -36,5 +41,9 @@ urlpatterns = [
     path('teacher/topics/', manage_topics, name='manage_topics'),
     path('teacher/topics/<int:pk>/edit/', edit_topic, name='edit_topic'),
     path('teacher/topics/<int:pk>/delete/', delete_topic, name='delete_topic'),
-                                  # 
+    path('teacher/lessons/', manage_lessons, name='manage_lessons'),
+    path('teacher/lessons/<int:pk>/edit/', edit_lesson, name='edit_lesson'),
+    path('teacher/lessons/<int:pk>/delete/', delete_lesson, name='delete_lesson'),
+    path('teacher/quizzes/', manage_quizzes, name='manage_quizzes'),
+    path('teacher/quizzes/<int:quiz_id>/questions/', manage_questions, name='manage_questions'),
 ]

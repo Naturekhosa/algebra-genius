@@ -27,8 +27,8 @@
     <div class="sidebar">
         <div class="sidebar-header">Admin Dashboard</div>
         <a href="{% url 'manage_topics' %}" class="nav-link">Topics</a>
-        <a href="#" class="nav-link">Lessons</a>
-        <a href="#" class="nav-link">Quizzes</a>
+        <a href="{% url 'manage_lessons' %}" class="nav-link {% if request.resolver_match.url_name == 'manage_lessons' %}active{% endif %}">Lessons</a>
+        <a href="{% url 'manage_quizzes' %}" class="nav-link">Quizzes</a>
         <a href="#" class="nav-link">Reports</a>
         <a href="{% url 'logout' %}" class="nav-link" style="margin-top: 50px; color: #d9534f;">Logout</a>
     </div>
